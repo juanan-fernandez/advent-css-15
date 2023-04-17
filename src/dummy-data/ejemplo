@@ -1,0 +1,18 @@
+// Debes reemplazar "TU_CLAVE_DE_API" con tu propia clave de API de YouTube.
+const API_KEY = 'TU_CLAVE_DE_API';
+
+// Debes reemplazar "ID_DEL_VIDEO" con el ID del video de YouTube que deseas obtener.
+const VIDEO_ID = 'ID_DEL_VIDEO';
+
+// Hacer una solicitud a la API de YouTube utilizando fetch.
+fetch(
+	`https://www.googleapis.com/youtube/v3/videos?id=${VIDEO_ID}&key=${API_KEY}&part=contentDetails`
+)
+	.then(response => response.json())
+	.then(data => {
+		// La URL directa al video se encuentra en la propiedad "data.items[0].contentDetails.videoUrl".
+		const videoUrl = data.items[0].contentDetails.videoUrl;
+		console.log(videoUrl);
+	});
+
+//var url = `https://www.youtube.com/watch?v=${result.id.videoId}`;
