@@ -1,6 +1,8 @@
 import { useHttp, HttpHookResponse } from '../../hooks/useHttp';
-import { SetStateAction, useEffect, useState } from 'react';
-type Video = {
+import { useEffect, useState } from 'react';
+import VideoList from './VideoList';
+
+export type Video = {
 	id: string;
 	title: string;
 	description: string;
@@ -31,6 +33,14 @@ function VideoData() {
 	useEffect(() => {
 		setListOfVideos(getVideosData());
 	}, [data]);
+
+	return (
+		<>
+			{isLoading && <p>loading...</p>}
+			{error && <p>error...</p>}
+			<VideoList videos={listOfVideos} />
+		</>
+	);
 }
 
 export default VideoData;
