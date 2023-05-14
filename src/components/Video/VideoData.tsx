@@ -1,5 +1,6 @@
 import { useHttp, HttpHookResponse } from '../../hooks/useHttp';
-import { useEffect, useState } from 'react';
+//import { useFetch, HttpHookResponse } from '../../hooks/useFetch';
+import { useEffect, useState, useRef } from 'react';
 import VideoList from './VideoList';
 
 export type Video = {
@@ -13,9 +14,17 @@ export type Video = {
 
 function VideoData() {
 	const apiKey = import.meta.env.VITE_YOUTUBE_APIKEY;
-	const url = `'https://youtube.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular&regionCode=ES&key=${apiKey}'`;
+	const url =
+		'https://youtube.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular&regionCode=ES&key=' +
+		apiKey;
+
+	const aux: HttpHookResponse = useHttp(url);
+	console.log(aux);
+
+	const { isLoading, error, data } = aux;
 	const [listOfVideos, setListOfVideos] = useState<Video[]>([]);
-	const { isLoading, error, data }: HttpHookResponse = useHttp(url);
+
+	//console.log(data);
 
 	const getVideosData = (): Video[] => {
 		return data.items.map((v: any) => {
@@ -31,7 +40,9 @@ function VideoData() {
 	};
 
 	useEffect(() => {
-		setListOfVideos(getVideosData());
+		if (!isLoading && !error) {
+			setListOfVideos(getVideosData());
+		}
 	}, [data]);
 
 	return (

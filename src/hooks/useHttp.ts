@@ -7,25 +7,24 @@ export type HttpHookResponse = {
 };
 
 export function useHttp(url: string): HttpHookResponse {
-	const [data, setData] = useState(null);
-	const [isLoading, setIsLoading] = useState(true);
-	const [error, setError] = useState(null);
+	const [data, setData] = useState<any>(null);
+	const [isLoading, setIsLoading] = useState<boolean>(true);
+	const [error, setError] = useState<any>(null);
 
 	async function fetchData() {
 		try {
-			const response = await fetch(url);
+			const response = await fetch(url, { method: 'GET' });
 			if (!response.ok) {
 				throw new Error(
 					`'ERROR: ${response.statusText} => No se ha podido realizar la consulta a la API`
 				);
 			}
-			const json = await response.json();
-			setData(json);
+			const jsonData = await response.json();
+			console.log(jsonData);
+
+			setData(jsonData);
 		} catch (err: any) {
-			setError(
-				err.message ||
-					'ERROR: ${response.statusText} => No se ha podido realizar la consulta a la API'
-			);
+			setError(err.message || 'ERROR: No se ha podido realizar la consulta a la API');
 		} finally {
 			setIsLoading(false);
 		}
@@ -33,7 +32,7 @@ export function useHttp(url: string): HttpHookResponse {
 
 	useEffect(() => {
 		fetchData();
-	}, [url]);
+	}, []);
 
 	return {
 		isLoading,

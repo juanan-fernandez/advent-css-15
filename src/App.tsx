@@ -1,4 +1,5 @@
 import './App.css';
+import VideoData from './components/Video/VideoData';
 import Header from './components/ui/Header/Header';
 import LayOut from './components/ui/Layout';
 function App() {
@@ -7,7 +8,7 @@ function App() {
 			<Header />
 			<LayOut>
 				<p>tontaco</p>
-				<p>hola</p>
+				<VideoData />
 			</LayOut>
 		</div>
 	);
