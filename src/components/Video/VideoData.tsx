@@ -10,6 +10,7 @@ export type Video = {
 	image: string;
 	imageMed: string;
 	imageHigh: string;
+	videoUrl: string;
 };
 
 function VideoData() {
@@ -18,18 +19,14 @@ function VideoData() {
 		'https://youtube.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular&regionCode=ES&key=' +
 		apiKey;
 
-	const aux: HttpHookResponse = useHttp(url);
-	console.log(aux);
-
-	const { isLoading, error, data } = aux;
+	const { isLoading, error, data } = useHttp(url);
 	const [listOfVideos, setListOfVideos] = useState<Video[]>([]);
-
-	//console.log(data);
 
 	const getVideosData = (): Video[] => {
 		return data.items.map((v: any) => {
 			return {
 				id: v.id,
+				videoUrl: `https://www.youtube.com/watch?v=${v.id}`,
 				title: v.snippet.title,
 				description: v.snippet.description,
 				image: v.snippet.thumbnails.default.url,
@@ -40,7 +37,7 @@ function VideoData() {
 	};
 
 	useEffect(() => {
-		if (!isLoading && !error) {
+		if (data) {
 			setListOfVideos(getVideosData());
 		}
 	}, [data]);

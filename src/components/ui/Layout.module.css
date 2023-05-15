@@ -1,7 +1,7 @@
 .layout {
 	width: 90vw;
-	height: 100vh;
+	height: 100%;
 	display: grid;
-	grid-template-columns: 4fr 1fr;
-	gap: 1rem;
+	grid-template-columns: 4fr 1.2fr;
+	gap: 0.5rem;
 }
