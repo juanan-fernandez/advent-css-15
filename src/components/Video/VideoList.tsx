@@ -4,14 +4,13 @@ import styles from './VideoList.module.css';
 
 type VideoListProps = {
 	videos: Video[];
+	selectVideo: (video: Video) => void;
 };
-function VideoList({ videos }: VideoListProps) {
-	console.log(videos);
-
+function VideoList({ videos, selectVideo }: VideoListProps) {
 	const list: React.ReactNode = videos.map(video => {
 		return (
 			<li key={video.id}>
-				<VideoItem video={video} />
+				<VideoItem video={video} selectVideo={selectVideo} />
 			</li>
 		);
 	});

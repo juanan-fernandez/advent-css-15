@@ -25,6 +25,9 @@ function VideoData() {
 	const [listOfVideos, setListOfVideos] = useState<Video[]>([]);
 	const [activeVideo, setActiveVideo] = useState<Video | null>(null);
 
+	const onSelectVideo = (video: Video): void => {
+		setActiveVideo(video);
+	};
 	const selectActiveVideo = (videosAux: Video[]) => {
 		const supLimit = videosAux.length;
 		const selectedVideoIndex = Math.floor(Math.random() * supLimit);
@@ -60,7 +63,7 @@ function VideoData() {
 				{isLoading && <p>loading...</p>}
 				{error && <p>error...</p>}
 				<VideoActive video={activeVideo} />
-				<VideoList videos={listOfVideos} />
+				<VideoList videos={listOfVideos} selectVideo={onSelectVideo} />
 			</LayOut>
 		</>
 	);
