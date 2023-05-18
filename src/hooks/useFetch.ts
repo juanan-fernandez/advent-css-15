@@ -33,7 +33,8 @@ export function useFetch(url: string): HttpHookResponse {
 					setError(
 						err.message || 'ERROR: No se ha podido realizar la petición a la API'
 					)
-				);
+				)
+				.finally(() => setIsLoading(false));
 		}
 		fetchData();
 	}, [url]);

@@ -32,7 +32,7 @@ function VideoData() {
 		const selectedVideoIndex = Math.floor(Math.random() * supLimit);
 		return videosAux[selectedVideoIndex];
 	};
-	const getVideosData = (items: any): Video[] => {
+	const getVideosData = (items: any[]): Video[] => {
 		const videosAux: Video[] = items.map((v: any) => {
 			return {
 				id: v.id,
