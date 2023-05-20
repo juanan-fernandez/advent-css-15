@@ -11,7 +11,7 @@ export function useHttp(url: string): HttpHookResponse {
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [error, setError] = useState<any>(null);
 
-	async function fetchData() {
+	async function fetchData(): Promise<void> {
 		try {
 			const response = await fetch(url, { method: 'GET' });
 			if (!response.ok) {
