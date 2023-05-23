@@ -16,13 +16,24 @@ export type Video = {
 
 function VideoData() {
 	const apiKey = import.meta.env.VITE_YOUTUBE_APIKEY;
-	const url =
+	const initUrl = () =>
 		'https://youtube.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular&regionCode=ES&key=' +
 		apiKey;
 
+	const [url, setUrl] = useState(initUrl);
 	const { isLoading, error, data }: HttpHookResponse = useHttp(url);
 	const [listOfVideos, setListOfVideos] = useState<Video[]>([]);
 	const [activeVideo, setActiveVideo] = useState<Video | null>(null);
+
+	const onUrlChange = (pageToken: string): void => {
+		let newUrl =
+			'https://youtube.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular&regionCode=ES';
+		if (pageToken) {
+			newUrl += '&pageToken=' + pageToken;
+		}
+		newUrl += '&key=' + apiKey;
+		setUrl(newUrl);
+	};
 
 	const onSelectVideo = (video: Video): void => {
 		setActiveVideo(video);
@@ -59,10 +70,15 @@ function VideoData() {
 	return (
 		<>
 			<LayOut>
-				{isLoading && <p>loading...</p>}
+				{isLoading && <p>LOADING...</p>}
 				{error && <p>error...</p>}
 				<VideoActive video={activeVideo} />
-				<VideoList videos={listOfVideos} selectVideo={onSelectVideo} />
+				<VideoList
+					videos={listOfVideos}
+					selectVideo={onSelectVideo}
+					urlChange={onUrlChange}
+					pages={{ prev: data?.prevPageToken, next: data?.nextPageToken }}
+				/>
 			</LayOut>
 		</>
 	);

@@ -20,8 +20,6 @@ export function useHttp(url: string): HttpHookResponse {
 				);
 			}
 			const jsonData = await response.json();
-			console.log(jsonData);
-
 			setData(jsonData);
 		} catch (err: any) {
 			setError(err.message || 'ERROR: No se ha podido realizar la consulta a la API');
@@ -32,7 +30,7 @@ export function useHttp(url: string): HttpHookResponse {
 
 	useEffect(() => {
 		fetchData();
-	}, []);
+	}, [url]);
 
 	return {
 		isLoading,
